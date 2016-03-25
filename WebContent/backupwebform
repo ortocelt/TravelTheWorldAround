@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form id="allUsers">
+		<h:commandLink value="All users" action="#{ajaxBean.renderUsers}">
+			<f:ajax event="action" render=":output :usersForm" listener="#{userBean.userActivation(user.active)}"/>
+		</h:commandLink>
+	</h:form>
+	<h:panelGroup id="output">
+		<h:panelGroup layout="block" rendered="#{ajaxBean.responseRendered}">
+			<h:form id="usersForm">
+				<h:dataTable value="#{userBean.userTable}" var="user">
+					<h:column>
+						<f:facet name="header"> ID</f:facet>
+			#{user.id}
+		</h:column>
+					<h:column>
+						<f:facet name="header"> Name</f:facet>
+					#{user.name}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Surname</f:facet>
+					#{user.surname}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Username</f:facet>
+					#{user.username}
+				</h:column>
+					<h:column>
+						<f:facet name="header">Active</f:facet>
+
+						<h:commandLink id="selectMenu" value="#{user.active}">
+                <f:ajax execute="selectMenu" listener="#{userBean.userActivation(user.active)}" render="@form" />
+            </h:commandLink>
+
+					</h:column>
+
+				</h:dataTable>
+			</h:form>
+		</h:panelGroup>
+	</h:panelGroup>
+</ui:composition>
+</html>

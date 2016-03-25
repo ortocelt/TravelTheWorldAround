@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<ui:composition>
+	<h:form>
+		<h:panelGroup layout="block">
+	Name: <h:inputText id="name" value="#{userBean.newUser.name}"
+				required="true" requiredMessage="Name is required" />
+			<h:message for="name" style="color:red" /><br /><br />
+	Surname: <h:inputText id="surname"
+				value="#{userBean.newUser.surname}" required="true"
+				requiredMessage="Surname is required" />
+			<h:message for="surname" style="color:red" />
+	<br /><br />Username: <h:inputText id="username"
+				value="#{userBean.newUser.username}" required="true"
+				requiredMessage="Username is required" />
+			<h:message for="username" style="color:red" />
+		
+	<br /><br />Password: <h:inputSecret id="password"
+				value="#{userBean.newUser.password}" required="true"
+				requiredMessage="Password is required" validatorMessage="Small, big letters, numbers, 6 characters minimum">
+				<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
+				</h:inputSecret>
+			<h:message for="password" style="color:red" />
+	<br /><br />E-mail: <h:inputText id="email"
+				value="#{userBean.newUser.email}" required="true"
+				requiredMessage="Email required" validatorMessage="Invalid Email format">
+				<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+				</h:inputText>
+			<h:message for="email" style="color:red" />
+	  
+	<br /><br />Biography: <h:inputText id="biography"
+				value="#{userBean.newUser.biography}" required="true"
+				requiredMessage="Biography is required" />
+			<h:message for="biography" style="color:red" />
+	<br /><br />Birthday: <h:inputText p:type="date" id="date"
+				value="#{userBean.tempDate}" required="true" requiredMessage="Date is required">
+				<f:convertDateTime pattern="yyyy-MM-dd" type="date" dateType="short" />
+				</h:inputText>
+				<h:message for="date" style="color:red" /><br /><br/>
+			<h:commandButton action="#{userBean.registration}" value="Register"/>
+			<h:outputText style="color:red;font-size:9px;" value="#{userBean.messageRegister}"></h:outputText>
+		</h:panelGroup>
+	</h:form>
+</ui:composition>
+</html>

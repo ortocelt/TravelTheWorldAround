@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form>
+		<h:commandLink value="Add new Travel"
+			action="#{indexBean.userAddNewTravel}" />
+		<h:commandLink value="Edit travels"
+			action="#{travelsBean.userEditTravels}" />
+		<h:commandLink value="#{userBean.numberOfUnreadMessages}"
+			action="#{userBean.userInbox}" /> 
+	</h:form>
+
+	<h:form id="search">
+		<h:outputText value="Search Travels" />
+		<h:inputText value="#{userBean.searchKey}" />
+		<h:selectOneMenu value="#{userBean.searchType}">
+			<f:selectItem itemValue="title" itemLabel="Search by title" />
+			<f:selectItem itemLabel="Search by keywords" itemValue="key" />
+		</h:selectOneMenu>
+		<h:commandButton value="Search" action="#{userBean.userTravelsSearch}">
+			<f:ajax execute="search" render="output"></f:ajax>
+		</h:commandButton>
+		<h:panelGroup id="output">
+			<h:panelGroup layout="block"
+				rendered="#{not empty userBean.userTravelsSearchResult}">
+				<h:form>
+					<h:dataTable value="#{userBean.userTravelsSearchResult}"
+						var="travels">
+						<h:column>
+							<f:facet name="header"> ID</f:facet>
+							<h:commandLink value="#{travels.id}"
+								action="#{travelsBean.openTravelPage(travels.id)}">
+								<!-- <f:ajax execute="@form"
+									listener="#{travelsBean.openTravelPage(travel.id)}"
+									 /> -->
+							</h:commandLink>
+						</h:column>
+						<h:column>
+							<f:facet name="header"> Travel</f:facet>
+					#{travels.title}
+				</h:column>
+						<h:column>
+							<f:facet name="header"> Location</f:facet>
+					#{travels.location}
+				</h:column>
+						<h:column>
+							<f:facet name="header"> Author</f:facet>
+							<h:outputText
+								value="#{userBean.userNameAndSurnameByID(travels.author)}" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
+
+			</h:panelGroup>
+			<h:panelGroup layout="block" rendered="#{!userBean.hasResult}">
+
+				<h3>No results</h3>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:form>
+
+	<h:form id="searchAuthors">
+	Name: <h:inputText id="name" value="#{userBean.userSearchName}"
+			required="true" requiredMessage="Enter search parameters" />
+		<h:message for="name" style="color:red" />
+	Surname: <h:inputText id="surname"
+			value="#{userBean.userSearchSurname}" required="true"
+			requiredMessage="Enter search parameters" />
+		<h:message for="surname" style="color:red" />
+		<h:commandButton value="Search" action="#{userBean.userSearch}">
+			<f:ajax execute="searchAuthors" render="usersContacts"></f:ajax>
+		</h:commandButton>
+		<h:panelGroup id="usersContacts">
+			<h:panelGroup layout="block"
+				rendered="#{not empty userBean.userSearchResults}">
+				<h:dataTable value="#{userBean.userSearchResults}" var="users">
+					<h:column>
+						<f:facet name="header"> ID</f:facet>
+					#{users.id}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Name</f:facet>
+					#{users.name}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Surname</f:facet>
+					#{users.surname}
+				</h:column>
+					<h:column>
+						<f:facet name="header">Add to contacts</f:facet>
+						<h:commandLink action="#{userBean.addToContacts(users.id)}"
+							value="Add">
+							<f:param name="userId" value="#{users.id}" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:outputText value="#{userBean.addContactMsg}" />
+					</h:column>
+				</h:dataTable>
+
+			</h:panelGroup>
+			<h:panelGroup layout="block"
+				rendered="#{empty userBean.userSearchResults}">
+				<h3>No results</h3>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:form>
+</ui:composition>
+</html>

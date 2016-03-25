@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form>
+		<h:panelGrid columns="1">
+Username: <h:inputText id="username" value="#{userBean.loginUsername}"
+				requiredMessage="Username is required"
+				required="true" />
+			<h:message for="username" style="color:red" />
+Password: <h:inputSecret id="password" value="#{userBean.loginPassword}"
+				required="true" requiredMessage="Password is required" />
+			<h:message for="password" style="color:red" />
+
+			<h:commandButton value="Submit" action="#{userBean.login}" />
+			<h:outputText style="color:red;font-size:9px;"
+				value="#{userBean.messageLogin}"></h:outputText>
+		</h:panelGrid>
+	</h:form>
+</ui:composition>
+</html>

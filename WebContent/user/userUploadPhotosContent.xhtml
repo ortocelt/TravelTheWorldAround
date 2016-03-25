@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form enctype="multipart/form-data">
+		<h:panelGroup id="uploadedFiles">
+			<h:inputFile id="file" value="#{travelsBean.uploadedFile}" />
+			<h:commandButton value="Upload"
+				action="#{travelsBean.newTravelPhotoUpload}" />
+
+			<h:dataTable value="#{travelsBean.uploadedPhotos}" var="photoName">
+				<h:column>
+					<h:commandLink value="#{photoName}"
+						action="#{travelsBean.openAddedPhoto(photoName)}" />
+				</h:column>
+			</h:dataTable>
+			<h:commandButton value="Submit travel" action="#{indexBean.userMainPage}"/>
+		</h:panelGroup>
+	</h:form>
+</ui:composition>
+</html>

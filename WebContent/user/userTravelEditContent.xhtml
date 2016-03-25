@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form enctype="multipart/form-data">
+	Title: <h:inputText required="true" id="title"
+			value="#{travelsBean.travelForEdit.title}"
+			requiredMessage="Travel must have title" />
+		<h:message for="title" style="color:red" />
+		<br />
+		<br />
+	Brief: <h:inputText required="true" id="brief"
+			requiredMessage="Travel must have brief description"
+			value="#{travelsBean.travelForEdit.brief}" />
+		<h:message for="brief" style="color:red" />
+		<br />
+		<br />
+	Keywords: <h:inputText required="true" id="key"
+			requiredMessage="Enter keywords"
+			value="#{travelsBean.travelForEdit.keywords}" />
+		<h:message for="key" style="color:red" />
+		<br />
+		<br />
+	Text: <h:inputTextarea required="true" id="text"
+			requiredMessage="Travel must have content"
+			value="#{travelsBean.travelForEdit.text}" />
+		<h:message for="text" style="color:red" />
+		<br />
+		<br />
+	Location: <h:inputText required="true" id="location"
+			requiredMessage="Travel must have location"
+			value="#{travelsBean.travelForEdit.location}" />
+		<h:message for="location" style="color:red" />
+		<br />
+		<br />
+		<h:commandButton value="Add photos"
+			action="#{travelsBean.travelForEditAddPhotosChangeView}"> 
+		</h:commandButton>
+	</h:form>
+</ui:composition>
+</html>

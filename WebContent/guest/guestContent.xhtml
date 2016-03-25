@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+
+	<h:form>
+		<h:commandLink value="Login" action="#{indexBean.guestLoginPath}" />
+		<br />
+		<h:commandLink value="Register"
+			action="#{indexBean.guestRegisterPath}" />
+	</h:form>
+	<h:panelGroup layout="block">
+		<h:panelGroup layout="block"
+			rendered="#{not empty indexBean.rssMessages}"
+			styleClass="index-mainbox">
+			<div class="index-mainhead">
+				<h2 class="index-maintitle">Active news:</h2>
+			</div>
+			<div class="index-mainbody">
+				<ui:repeat value="#{indexBean.rssMessages}" var="poruka">
+					<div class="">
+						<a href="#{poruka.getLink()}"> <h:outputText
+								value="#{poruka.getTitle()}" />
+						</a>
+					</div>
+
+					<div class="index-maindesc">
+						<h:outputText value="#{poruka.getDescription()}" />
+					</div>
+				</ui:repeat>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup layout="block" rendered="#{empty indexBean.rssMessages}">
+			<h3>No new messages</h3>
+		</h:panelGroup>
+	</h:panelGroup>
+
+	<h:form id="search">
+		<h:outputText value="Search Travels" />
+		<h:inputText value="#{indexBean.searchKey}" />
+		<h:selectOneMenu value="#{indexBean.searchType}">
+			<f:selectItem itemValue="title" itemLabel="Search by title" />
+			<f:selectItem itemLabel="Search by keywords" itemValue="key" />
+		</h:selectOneMenu>
+		<h:commandButton value="Search"
+			action="#{indexBean.guestTravelsSearch}">
+			<f:ajax execute="search" render="output"></f:ajax>
+		</h:commandButton>
+		<h:panelGroup id="output">
+			<h:panelGroup layout="block"
+				rendered="#{not empty indexBean.guestTravelsSearchResult}">
+				<h:dataTable value="#{indexBean.guestTravelsSearchResult}"
+					var="travels">
+					<h:column>
+						<f:facet name="header"> ID</f:facet>
+					#{travels.id}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Travel</f:facet>
+					#{travels.title}
+				</h:column>
+					<h:column>
+						<f:facet name="header"> Brief</f:facet>
+					#{travels.brief}
+				</h:column>
+				</h:dataTable>
+
+			</h:panelGroup>
+			<h:panelGroup layout="block" rendered="#{!indexBean.hasResult}">
+
+				<h3>No results</h3>
+			</h:panelGroup>
+		</h:panelGroup>
+	</h:form>
+</ui:composition>
+</html>
