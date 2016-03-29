@@ -5,6 +5,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html">
 <ui:composition>
-	Messages
+	<h:form>
+		<h:dataTable value="#{userBean.userMessages}" var="message">
+			<h:column>
+				<f:facet name="header">From</f:facet>
+				<h:outputText
+					value="#{userBean.userNameAndSurnameByID(message.from)}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Date</f:facet>
+				<h:outputText value="#{message.date}"/>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Status</f:facet>
+				<h:outputText value="#{userBean.messageStatus(message.read)}"/>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
 </ui:composition>
 </html>

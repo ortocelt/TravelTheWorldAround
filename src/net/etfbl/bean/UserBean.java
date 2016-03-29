@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 
 import net.etfbl.dao.TravelsDao;
 import net.etfbl.dao.UserDao;
+import net.etfbl.dto.Messages;
 import net.etfbl.dto.Travels;
 import net.etfbl.dto.User;
 
@@ -37,7 +38,7 @@ public class UserBean {
 	private ArrayList<User> userSearchResults = new ArrayList<User>();
 	private String addContactMsg = "";
 	private String numberOfUnreadMessages;
-	
+	private ArrayList<Messages> userMessages = new ArrayList<Messages>();
 
 	public String login() {
 		User user = new User();
@@ -55,7 +56,7 @@ public class UserBean {
 					this.userTable = UserDao.userTable();
 					return "/admin/adminMainPage.xhtml?faces-redirect=true";
 				} else if (user.getPrivilegies_id() == 2) {
-					//message population
+					setUserMessages(UserDao.userMessages(user.getId()));
 					return "/user/userMainPage.xhtml?faces-redirect=true";
 				}
 			}
@@ -84,14 +85,15 @@ public class UserBean {
 		setLoggedIn(false);
 		return "/index.xhtml?faces-redirect=true";
 	}
-	
+
 	/**
 	 * Redirects to users Inbox page
+	 * 
 	 * @return
 	 */
 	public String userInbox() {
 		return "/user/userInboxPage.xhtml?faces-redirect=true";
-		
+
 	}
 
 	/**
@@ -108,12 +110,21 @@ public class UserBean {
 		this.userTable = UserDao.userTable();
 
 	}
+
+	public String messageStatus(int id) {
+		String status = "Read";
+		if (id == 1) {
+			status = "Unread";
+		}
+		return status;
+	}
+
 	/**
 	 * 
 	 * @return User Travel requested Travel page
 	 */
 	public String userTravelsSearch() {
-		setUserTravelsSearchResult(TravelsDao.userTravelsSearchResult(searchKey,searchType));
+		setUserTravelsSearchResult(TravelsDao.userTravelsSearchResult(searchKey, searchType));
 		if (getUserTravelsSearchResult().isEmpty()) {
 			hasResult = false;
 		} else {
@@ -121,23 +132,28 @@ public class UserBean {
 			return "/user/userTravelSearchResult.xhtml?faces-redirect=true";
 		}
 		return "";
-		
+
 	}
-	
+
 	public void addToContacts(int id) {
 		addContactMsg = UserDao.addToContacts(loginId, id);
 	}
-	
+
 	public String userSearch() {
-		setUserSearchResults(UserDao.userSearchResults(userSearchName,userSearchSurname));
+		setUserSearchResults(UserDao.userSearchResults(userSearchName, userSearchSurname));
 		return "";
-		
+
 	}
-	
+
+	/**
+	 * Returns user's Name and Surname by provided ID
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public static String userNameAndSurnameByID(int id) {
 		return UserDao.getUserNameAndSurname(id);
 	}
-	
 
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -283,7 +299,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param userPrivilegie the userPrivilegie to set
+	 * @param userPrivilegie
+	 *            the userPrivilegie to set
 	 */
 	public void setUserPrivilegie(int userPrivilegie) {
 		this.userPrivilegie = userPrivilegie;
@@ -297,10 +314,10 @@ public class UserBean {
 	}
 
 	/**
-	 * @param userTravelsSearchResult the userTravelsSearchResult to set
+	 * @param userTravelsSearchResult
+	 *            the userTravelsSearchResult to set
 	 */
-	public void setUserTravelsSearchResult(
-			ArrayList<Travels> userTravelsSearchResult) {
+	public void setUserTravelsSearchResult(ArrayList<Travels> userTravelsSearchResult) {
 		this.userTravelsSearchResult = userTravelsSearchResult;
 	}
 
@@ -312,7 +329,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param searchType the searchType to set
+	 * @param searchType
+	 *            the searchType to set
 	 */
 	public void setSearchType(String searchType) {
 		this.searchType = searchType;
@@ -326,7 +344,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param searchKey the searchKey to set
+	 * @param searchKey
+	 *            the searchKey to set
 	 */
 	public void setSearchKey(String searchKey) {
 		this.searchKey = searchKey;
@@ -340,7 +359,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param hasResult the hasResult to set
+	 * @param hasResult
+	 *            the hasResult to set
 	 */
 	public void setHasResult(boolean hasResult) {
 		this.hasResult = hasResult;
@@ -354,7 +374,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param searchKeyAuthor the searchKeyAuthor to set
+	 * @param searchKeyAuthor
+	 *            the searchKeyAuthor to set
 	 */
 	public void setSearchKeyAuthor(String searchKeyAuthor) {
 		this.searchKeyAuthor = searchKeyAuthor;
@@ -368,7 +389,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param userSearchName the userSearchName to set
+	 * @param userSearchName
+	 *            the userSearchName to set
 	 */
 	public void setUserSearchName(String userSearchName) {
 		this.userSearchName = userSearchName;
@@ -382,7 +404,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param userSearchSurname the userSearchSurname to set
+	 * @param userSearchSurname
+	 *            the userSearchSurname to set
 	 */
 	public void setUserSearchSurname(String userSearchSurname) {
 		this.userSearchSurname = userSearchSurname;
@@ -396,7 +419,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param userSearchResults the userSearchResults to set
+	 * @param userSearchResults
+	 *            the userSearchResults to set
 	 */
 	public void setUserSearchResults(ArrayList<User> userSearchResults) {
 		this.userSearchResults = userSearchResults;
@@ -410,7 +434,8 @@ public class UserBean {
 	}
 
 	/**
-	 * @param addContactMsg the addContactMsg to set
+	 * @param addContactMsg
+	 *            the addContactMsg to set
 	 */
 	public void setAddContactMsg(String addContactMsg) {
 		this.addContactMsg = addContactMsg;
@@ -424,10 +449,19 @@ public class UserBean {
 	}
 
 	/**
-	 * @param numberOfUnreadMessages the numberOfUnreadMessages to set
+	 * @param numberOfUnreadMessages
+	 *            the numberOfUnreadMessages to set
 	 */
 	public void setNumberOfUnreadMessages(String numberOfUnreadMessages) {
 		this.numberOfUnreadMessages = numberOfUnreadMessages;
+	}
+
+	public ArrayList<Messages> getUserMessages() {
+		return userMessages;
+	}
+
+	public void setUserMessages(ArrayList<Messages> userMessages) {
+		this.userMessages = userMessages;
 	}
 
 }

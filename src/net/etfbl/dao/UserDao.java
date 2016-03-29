@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import net.etfbl.dto.Messages;
 import net.etfbl.dto.User;
 
 public class UserDao {
@@ -21,6 +22,7 @@ public class UserDao {
 	private static final String searchUserByNameAndSurname = "select * from user where name = ? or surname = ?";
 	private static String addContact = "insert into contacts (user, contact) values (?,?)";
 	private static String checkContactList = "select * from contacts where user = ? and contact = ?";
+	private static final String userMessages = "select * from messages where to = ? order by date";
 
 	public static User login(String username, String password) {
 		try {
@@ -284,5 +286,29 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public static ArrayList<Messages> userMessages(int id) {
+		ArrayList<Messages> messages = new ArrayList<Messages>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel","root","root");
+			PreparedStatement st = conn.prepareStatement(userMessages);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()){
+				Messages message = new Messages();
+				message.setId(rs.getInt("id"));
+				message.setDate(rs.getTimestamp("date"));
+				message.setFrom(rs.getInt("from"));
+				message.setRead(rs.getInt("read"));
+				message.setTo(rs.getInt("to"));
+				message.setText(rs.getString("text"));
+				messages.add(message);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return messages;
 	}
 }
