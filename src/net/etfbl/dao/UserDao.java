@@ -22,7 +22,8 @@ public class UserDao {
 	private static final String searchUserByNameAndSurname = "select * from user where name = ? or surname = ?";
 	private static String addContact = "insert into contacts (user, contact) values (?,?)";
 	private static String checkContactList = "select * from contacts where user = ? and contact = ?";
-	private static final String userMessages = "select * from messages where to = ? order by date";
+	private static final String userMessages = "select * from messages where to = ? order by date asc";
+	private static final String messagesCount = "select count(`to`) as number where `to` = ? and `read` = 0";
 
 	public static User login(String username, String password) {
 		try {
@@ -310,5 +311,27 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return messages;
+	}
+
+	public static String numberOfUnreadMessages(int id) {
+		String number = "0";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel","root","root");
+		PreparedStatement st = conn.prepareStatement(messagesCount);
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()){
+			number = String.valueOf(rs.getInt(number));
+		}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return number;
 	}
 }

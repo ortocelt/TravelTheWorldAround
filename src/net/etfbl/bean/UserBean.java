@@ -56,7 +56,8 @@ public class UserBean {
 					this.userTable = UserDao.userTable();
 					return "/admin/adminMainPage.xhtml?faces-redirect=true";
 				} else if (user.getPrivilegies_id() == 2) {
-					setUserMessages(UserDao.userMessages(user.getId()));
+					numberOfUnreadMessages = UserDao.numberOfUnreadMessages(user.getId());
+					userMessages = UserDao.userMessages(user.getId());
 					return "/user/userMainPage.xhtml?faces-redirect=true";
 				}
 			}
