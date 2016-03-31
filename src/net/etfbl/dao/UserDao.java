@@ -22,7 +22,8 @@ public class UserDao {
 	private static final String searchUserByNameAndSurname = "select * from user where name = ? or surname = ?";
 	private static String addContact = "insert into contacts (user, contact) values (?,?)";
 	private static String checkContactList = "select * from contacts where user = ? and contact = ?";
-	private static final String userMessages = "select * from messages where to = ? order by date";
+	private static final String userMessages = "select * from messages where receiver = ? order by date asc";
+	private static final String messagesCount = "select count(id) as number from messages where receiver = ? and mread = 0";
 
 	public static User login(String username, String password) {
 		try {
@@ -300,9 +301,9 @@ public class UserDao {
 				Messages message = new Messages();
 				message.setId(rs.getInt("id"));
 				message.setDate(rs.getTimestamp("date"));
-				message.setFrom(rs.getInt("from"));
-				message.setRead(rs.getInt("read"));
-				message.setTo(rs.getInt("to"));
+				message.setSender(rs.getInt("sender"));
+				message.setMread(rs.getInt("mread"));
+				message.setReceiver(rs.getInt("receiver"));
 				message.setText(rs.getString("text"));
 				messages.add(message);
 			}
@@ -310,5 +311,32 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return messages;
+	}
+
+	public static String numberOfUnreadMessages(int id) {
+		String number = "0";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel","root","root");
+		PreparedStatement st = conn.prepareStatement(messagesCount);
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()){
+			number = String.valueOf(rs.getInt("number"));
+		}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return number;
+	}
+
+	public static void setMessageToRead(int id) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -6,9 +6,9 @@ public class Messages {
 	private int id;
 	private String text;
 	private Timestamp date;
-	private int read;
-	private int from;
-	private int to;
+	private int mread;
+	private int sender;
+	private int receiver;
 
 	public int getId() {
 		return id;
@@ -34,28 +34,28 @@ public class Messages {
 		this.date = date;
 	}
 
-	public int getRead() {
-		return read;
+	public int getMread() {
+		return mread;
 	}
 
-	public void setRead(int read) {
-		this.read = read;
+	public void setMread(int mread) {
+		this.mread = mread;
 	}
 
-	public int getFrom() {
-		return from;
+	public int getSender() {
+		return sender;
 	}
 
-	public void setFrom(int from) {
-		this.from = from;
+	public void setSender(int sender) {
+		this.sender = sender;
 	}
 
-	public int getTo() {
-		return to;
+	public int getReceiver() {
+		return receiver;
 	}
 
-	public void setTo(int to) {
-		this.to = to;
+	public void setReceiver(int receiver) {
+		this.receiver = receiver;
 	}
 
 }

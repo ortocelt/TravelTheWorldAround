@@ -39,6 +39,7 @@ public class UserBean {
 	private String addContactMsg = "";
 	private String numberOfUnreadMessages;
 	private ArrayList<Messages> userMessages = new ArrayList<Messages>();
+	private Messages messageView = new Messages();
 
 	public String login() {
 		User user = new User();
@@ -56,7 +57,8 @@ public class UserBean {
 					this.userTable = UserDao.userTable();
 					return "/admin/adminMainPage.xhtml?faces-redirect=true";
 				} else if (user.getPrivilegies_id() == 2) {
-					setUserMessages(UserDao.userMessages(user.getId()));
+					numberOfUnreadMessages = UserDao.numberOfUnreadMessages(user.getId());
+					userMessages = UserDao.userMessages(user.getId());
 					return "/user/userMainPage.xhtml?faces-redirect=true";
 				}
 			}
@@ -143,6 +145,26 @@ public class UserBean {
 		setUserSearchResults(UserDao.userSearchResults(userSearchName, userSearchSurname));
 		return "";
 
+	}
+	
+	/**
+	 * Opens user message, sets Unread status to Read
+	 * @param id
+	 * @return
+	 */
+	public String openUserMessage(int id){
+		UserDao.setMessageToRead(id);
+		for (Messages message : userMessages){
+			if (message.getId() == id) {
+				messageView.setId(message.getId());
+				messageView.setSender(message.getSender());
+				messageView.setReceiver(message.getReceiver());
+				messageView.setText(message.getText());
+				messageView.setDate(message.getDate());
+			}
+		}
+		return "/user/userMessageView.xhtml?faces-redirect=true";
+		
 	}
 
 	/**
@@ -462,6 +484,14 @@ public class UserBean {
 
 	public void setUserMessages(ArrayList<Messages> userMessages) {
 		this.userMessages = userMessages;
+	}
+
+	public Messages getMessageView() {
+		return messageView;
+	}
+
+	public void setMessageView(Messages messageView) {
+		this.messageView = messageView;
 	}
 
 }
