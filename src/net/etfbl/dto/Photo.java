@@ -1,6 +1,12 @@
 package net.etfbl.dto;
 
-public class Photo {
+import java.io.Serializable;
+
+public class Photo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String path;
 	private int uploader;

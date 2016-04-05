@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition>
+	<h:form>
+		<h:commandLink value="Return to User Main page"
+			action="#{indexBean.userMainPage}" />
+	</h:form>
+	<h:outputText>Contact list</h:outputText>
+	<h:dataTable value="#{contactsBean.userContacts}" var="contacts">
+		<h:column>
+			<f:facet name="header">Contact</f:facet>
+			<h:form>
+				<h:commandLink value="#{contacts.contact}"
+					action="#{contactsBean.}">
+				</h:commandLink>
+			</h:form>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Title</f:facet>
+		#{travel.title}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Active</f:facet>
+		#{travel.active }
+		</h:column>
+	</h:dataTable>
+
+
+</ui:composition>
+</html>

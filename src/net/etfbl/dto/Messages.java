@@ -1,8 +1,13 @@
 package net.etfbl.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Messages {
+public class Messages implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String text;
 	private Timestamp date;
