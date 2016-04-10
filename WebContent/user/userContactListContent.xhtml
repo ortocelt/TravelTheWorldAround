@@ -13,20 +13,22 @@
 	<h:dataTable value="#{contactsBean.userContacts}" var="contacts">
 		<h:column>
 			<f:facet name="header">Contact</f:facet>
+			<h:outputText
+				value="#{contactsBean.contactNameAndSurname(#{contacts.id})}" />  
+		</h:column>
+		<h:column>
+			<f:facet name="header">Send message</f:facet>
 			<h:form>
-				<h:commandLink value="#{contacts.contact}"
-					action="#{contactsBean.}">
-				</h:commandLink>
+				<h:inputTextarea value="#{messageBean.messageText}" />
+				<h:commandButton value="Send message"
+					action="#{messageBean.sendMessage(#{contacts.id})}"/>
 			</h:form>
 		</h:column>
 		<h:column>
-			<f:facet name="header">Title</f:facet>
-		#{travel.title}
+		<f:facet name="header"/>
+		<h:outputText value="#{messagesBean.sentStatus}"/>
 		</h:column>
-		<h:column>
-			<f:facet name="header">Active</f:facet>
-		#{travel.active }
-		</h:column>
+
 	</h:dataTable>
 
 

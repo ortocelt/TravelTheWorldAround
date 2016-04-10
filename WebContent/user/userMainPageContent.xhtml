@@ -8,12 +8,15 @@
 	<h:form>
 		<h:commandLink value="Add new Travel"
 			action="#{indexBean.userAddNewTravel}" />
-			<br/>
+		<br />
 		<h:commandLink value="Edit travels"
 			action="#{travelsBean.userEditTravels}" />
-			<br/>
+		<br />
+		<h:outputText value="Number of unread messages:" />
 		<h:commandLink value="#{userBean.numberOfUnreadMessages}"
-			action="#{userBean.userInbox}" /> 
+			action="#{userBean.userInbox}" />
+		<br />
+		<h:commandLink value="Contact list" action="#{userBean.contactListRedirectiont}" />
 	</h:form>
 
 	<h:form id="search">

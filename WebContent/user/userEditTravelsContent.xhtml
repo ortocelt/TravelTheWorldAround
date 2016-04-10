@@ -8,26 +8,27 @@
 	<h:form>
 		<h:commandLink value="Return to User Main page"
 			action="#{indexBean.userMainPage}" />
-</h:form>
-		<h:outputText>Current travels</h:outputText>
-		<h:dataTable value="#{travelsBean.userTravels}" var="travel">
-			<h:column>
-				<f:facet name="header">ID</f:facet>
-				<h:form>
-				<h:commandLink value="#{travel.id}" action="#{travelsBean.editTravel(travel.id)}">
+	</h:form>
+	<h:outputText>Current travels</h:outputText>
+	<h:dataTable value="#{travelsBean.userTravels}" var="travel">
+		<h:column>
+			<f:facet name="header">ID</f:facet>
+			<h:form>
+				<h:commandLink value="#{travel.id}"
+					action="#{travelsBean.editTravel(travel.id)}">
 				</h:commandLink>
-				</h:form>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Title</f:facet>
+			</h:form>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Title</f:facet>
 		#{travel.title}
 		</h:column>
-			<h:column>
-				<f:facet name="header">Active</f:facet>
+		<h:column>
+			<f:facet name="header">Active</f:facet>
 		#{travel.active }
 		</h:column>
-		</h:dataTable>
+	</h:dataTable>
 
-	
+
 </ui:composition>
 </html>

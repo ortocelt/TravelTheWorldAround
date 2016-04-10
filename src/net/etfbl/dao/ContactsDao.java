@@ -11,7 +11,7 @@ import net.etfbl.dto.Contacts;
 
 public class ContactsDao {
 	
-	private static final String contactsList = "select * from messages where user = ?";
+	private static final String contactsList = "select * from contacts where user = ?";
 
 	public static ArrayList<Contacts> userContactsList(int userIdentifier) {
 		

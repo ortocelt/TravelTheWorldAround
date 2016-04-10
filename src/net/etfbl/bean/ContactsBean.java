@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import net.etfbl.dao.ContactsDao;
+import net.etfbl.dao.UserDao;
 import net.etfbl.dto.Contacts;
 
 @ManagedBean
@@ -16,6 +17,10 @@ public class ContactsBean {
 	
 	public void userContactsList() {
 		userContacts = ContactsDao.userContactsList(UserBean.userIdentifier); 
+	}
+	
+	public String contactNameAndSurname(int id) {
+		return UserDao.getUserNameAndSurname(id);
 	}
 
 	public ArrayList<Contacts> getUserContacts() {

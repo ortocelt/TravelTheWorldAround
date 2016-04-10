@@ -98,6 +98,10 @@ public class UserBean {
 
 	}
 
+	public String contactListRedirectiont() { 
+		return "/user/userContactList.xhtml?faces-redirect=true";
+	}
+
 	/**
 	 * User activation or deactivation
 	 * 
@@ -146,15 +150,16 @@ public class UserBean {
 		return "";
 
 	}
-	
+
 	/**
 	 * Opens user message, sets Unread status to Read
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public String openUserMessage(int id){
+	public String openUserMessage(int id) {
 		UserDao.setMessageToRead(id);
-		for (Messages message : userMessages){
+		for (Messages message : userMessages) {
 			if (message.getId() == id) {
 				messageView.setId(message.getId());
 				messageView.setSender(message.getSender());
@@ -164,7 +169,7 @@ public class UserBean {
 			}
 		}
 		return "/user/userMessageView.xhtml?faces-redirect=true";
-		
+
 	}
 
 	/**
