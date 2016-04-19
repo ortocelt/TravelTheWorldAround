@@ -31,5 +31,10 @@ public class ContactsBean {
 		this.userContacts = userContacts;
 	}
 	
+	public String contactListRedirection() { 
+		userContactsList();
+		return "/user/userContactList.xhtml?faces-redirect=true";
+	}
+	
 	
 }

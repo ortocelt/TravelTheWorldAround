@@ -18,8 +18,9 @@ public class ContactsDao {
 		ArrayList<Contacts> userContacts = new ArrayList<Contacts>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("com.mysql://localhost:3306/travel","root","root");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/travel", "root", "root");
 			PreparedStatement st = conn.prepareStatement(contactsList);
+			st.setInt(1, userIdentifier);
 			ResultSet rs = st.executeQuery();
 			while(rs.next()){
 				Contacts contact = new Contacts();

@@ -15,10 +15,15 @@ public class MessagesBean {
 	private ArrayList<Messages> messageList = new ArrayList<Messages>();
 	private String sentStatus = "";
 	private String messageText = "";
+	private int messagereceiver;
 	
-	public void sendMessage(int receiver) {
-		MessageDao.sendMessage(messageText, UserBean.userIdentifier, receiver);
-		sentStatus = "Message sent";
+	public void sendMessage() {
+		sentStatus = MessageDao.sendMessage(messageText, UserBean.userIdentifier, messagereceiver, false);
+	}
+	
+	public String writeMessage(int contactId) {
+		setMessagereceiver(contactId);
+		return "/user/userMessage.xhtml?faces-redirect=true";
 	}
 
 	public ArrayList<Messages> getMessageList() {
@@ -43,6 +48,14 @@ public class MessagesBean {
 
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
+	}
+
+	public int getMessagereceiver() {
+		return messagereceiver;
+	}
+
+	public void setMessagereceiver(int messagereceiver) {
+		this.messagereceiver = messagereceiver;
 	}
 	
 	

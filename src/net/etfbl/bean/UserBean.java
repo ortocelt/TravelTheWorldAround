@@ -98,10 +98,6 @@ public class UserBean {
 
 	}
 
-	public String contactListRedirectiont() { 
-		return "/user/userContactList.xhtml?faces-redirect=true";
-	}
-
 	/**
 	 * User activation or deactivation
 	 * 

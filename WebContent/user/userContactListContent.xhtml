@@ -14,14 +14,12 @@
 		<h:column>
 			<f:facet name="header">Contact</f:facet>
 			<h:outputText
-				value="#{contactsBean.contactNameAndSurname(#{contacts.id})}" />  
+				value="#{contactsBean.contactNameAndSurname(contacts.id)}" />  
 		</h:column>
 		<h:column>
-			<f:facet name="header">Send message</f:facet>
+			<f:facet name="header">Create message</f:facet>
 			<h:form>
-				<h:inputTextarea value="#{messageBean.messageText}" />
-				<h:commandButton value="Send message"
-					action="#{messageBean.sendMessage(#{contacts.id})}"/>
+				<h:commandLink value="Write message" action="#{messagesBean.writeMessage(contacts.id)}"/>
 			</h:form>
 		</h:column>
 		<h:column>

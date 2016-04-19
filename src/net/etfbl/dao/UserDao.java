@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import net.etfbl.bean.UserBean;
 import net.etfbl.dto.Messages;
 import net.etfbl.dto.User;
 
@@ -260,6 +261,9 @@ public class UserDao {
 			st.setInt(1, userId);
 			st.setInt(2, contactId);
 			st.executeUpdate();
+			//send notification
+			String messageText = "User " + UserBean.userNameAndSurnameByID(userId) + " added you to contact list";
+			MessageDao.sendMessage(messageText, userId, contactId, true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
